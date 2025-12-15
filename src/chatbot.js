@@ -13,7 +13,13 @@ export function setupChatbot(root) {
       <div class="chat-shell">
         <header class="chat-header">
           <div class="sphinx-avatar">
-            <div class="sphinx-face">🧩</div>
+            <img
+              src="/sphinx.png"
+              alt="이집트 스핑크스"
+              class="sphinx-face"
+              onerror="this.style.display='none'; this.parentElement.classList.add('sphinx-fallback');"
+            />
+            <div class="sphinx-fallback-emoji">🧩</div>
           </div>
           <div class="header-text">
             <h1>이집트 스핑크스 화학 챗봇</h1>

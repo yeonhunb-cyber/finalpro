@@ -92,21 +92,21 @@ body {
 .chat-header {
   display: flex;
   align-items: center;
-  gap: 16px;
-  padding: 18px 24px 14px;
+  gap: 20px;
+  padding: 20px 26px 16px;
   border-bottom: 1px solid rgba(255, 248, 220, 0.2);
-  background: linear-gradient(90deg, rgba(250, 204, 21, 0.08), rgba(6, 182, 212, 0.05));
+  background: linear-gradient(90deg, rgba(250, 204, 21, 0.12), rgba(15, 23, 42, 0.9));
 }
 
 .sphinx-avatar {
   position: relative;
-  width: 60px;
-  height: 60px;
-  border-radius: 20px;
-  background: radial-gradient(circle at 30% 30%, #facc15, #b45309);
+  width: 86px;
+  height: 110px;
+  border-radius: 26px;
+  background: radial-gradient(circle at 30% 20%, #facc15, #92400e);
   box-shadow:
-    0 0 0 2px rgba(252, 211, 77, 0.7),
-    0 12px 22px rgba(0, 0, 0, 0.6);
+    0 0 0 2px rgba(252, 211, 77, 0.85),
+    0 18px 26px rgba(0, 0, 0, 0.75);
   display: flex;
   align-items: center;
   justify-content: center;
@@ -115,31 +115,48 @@ body {
 .sphinx-avatar::before {
   content: '';
   position: absolute;
-  inset: 10%;
-  border-radius: 18px;
+  inset: 6%;
+  border-radius: 24px;
   background:
     linear-gradient(135deg, rgba(0, 0, 0, 0.25), transparent),
     repeating-linear-gradient(
       90deg,
-      rgba(68, 32, 14, 0.9) 0,
-      rgba(68, 32, 14, 0.9) 9px,
-      rgba(248, 196, 113, 0.95) 9px,
-      rgba(248, 196, 113, 0.95) 18px
+      rgba(15, 23, 42, 0.98) 0,
+      rgba(15, 23, 42, 0.98) 10px,
+      rgba(251, 191, 36, 0.98) 10px,
+      rgba(251, 191, 36, 0.98) 22px
     );
-  mask-image: linear-gradient(to bottom, transparent 0, black 18%, black 100%);
-  opacity: 0.95;
+  mask-image: linear-gradient(to bottom, transparent 0, black 16%, black 100%);
+  opacity: 0.96;
 }
 
 .sphinx-face {
   position: relative;
+  width: 68px;
+  height: 90px;
+  border-radius: 22px;
+  object-fit: cover;
+  box-shadow:
+    0 0 14px rgba(0, 0, 0, 0.9),
+    0 0 22px rgba(251, 191, 36, 0.8);
+  z-index: 1;
+}
+
+.sphinx-fallback-emoji {
+  position: absolute;
   font-size: 30px;
   filter: drop-shadow(0 2px 4px rgba(0, 0, 0, 0.7));
+  z-index: 0;
+}
+
+.sphinx-avatar.sphinx-fallback .sphinx-fallback-emoji {
+  z-index: 1;
 }
 
 .header-text h1 {
   margin: 0;
-  font-size: 1.4rem;
-  letter-spacing: 0.05em;
+  font-size: 1.5rem;
+  letter-spacing: 0.08em;
 }
 
 .header-text p {

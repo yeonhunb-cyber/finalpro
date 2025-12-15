@@ -1,9 +1,9 @@
 /**
  * 메인 메뉴 페이지를 설정하는 함수
  * @param {HTMLElement} root
- * @param {{ onGoToTutor?: () => void, onGoToPractice?: () => void, onGoToStart?: () => void, onLogout?: () => void }} options
+ * @param {{ onGoToTutor?: () => void, onGoToPractice?: () => void, onGoToStart?: () => void, onGoToRecords?: () => void, onLogout?: () => void }} options
  */
-export function setupMenuPage(root, { onGoToTutor, onGoToPractice, onGoToStart, onLogout } = {}) {
+export function setupMenuPage(root, { onGoToTutor, onGoToPractice, onGoToStart, onGoToRecords, onLogout } = {}) {
   // 사용자 정보 가져오기
   const userInfoStr = localStorage.getItem('userInfo');
   const userInfo = userInfoStr ? JSON.parse(userInfoStr) : {};
@@ -57,6 +57,14 @@ export function setupMenuPage(root, { onGoToTutor, onGoToPractice, onGoToStart, 
                 <p>학습을 시작하세요</p>
               </div>
             </button>
+
+            <button id="menu-records" class="menu-button menu-button-records">
+              <div class="menu-button-icon">📊</div>
+              <div class="menu-button-text">
+                <h3>기록보기</h3>
+                <p>나의 학습 기록을 확인하세요</p>
+              </div>
+            </button>
           </div>
         </main>
       </div>
@@ -66,6 +74,7 @@ export function setupMenuPage(root, { onGoToTutor, onGoToPractice, onGoToStart, 
   const aiTutorBtn = root.querySelector('#menu-ai-tutor');
   const practiceBtn = root.querySelector('#menu-practice');
   const startBtn = root.querySelector('#menu-start');
+  const recordsBtn = root.querySelector('#menu-records');
   const logoutBtn = root.querySelector('#logout-button');
 
   if (aiTutorBtn && typeof onGoToTutor === 'function') {
@@ -83,6 +92,12 @@ export function setupMenuPage(root, { onGoToTutor, onGoToPractice, onGoToStart, 
   if (startBtn && typeof onGoToStart === 'function') {
     startBtn.addEventListener('click', () => {
       onGoToStart();
+    });
+  }
+
+  if (recordsBtn && typeof onGoToRecords === 'function') {
+    recordsBtn.addEventListener('click', () => {
+      onGoToRecords();
     });
   }
 

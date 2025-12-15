@@ -8,6 +8,7 @@ import { setupElementPracticePage } from './elementPracticePage.js';
 import { setupCompoundPracticePage } from './compoundPracticePage.js';
 import { setupSphinxChallengePage, showAngrySphinx } from './sphinxChallengePage.js';
 import { setupCompoundQuizPage } from './compoundQuizPage.js';
+import { setupRecordsPage } from './recordsPage.js';
 import { getGameState, hasAllElements } from './gameState.js';
 
 const app = document.querySelector('#app');
@@ -24,10 +25,15 @@ function render(view) {
       onGoToTutor: () => render('chat'),
       onGoToPractice: () => render('practice'),
       onGoToStart: () => render('sphinxChallenge'), // 시작 버튼을 누르면 스핑크스 챌린지로
+      onGoToRecords: () => render('records'),
       onLogout: () => {
         localStorage.removeItem('userInfo');
         render('login');
       }
+    });
+  } else if (view === 'records') {
+    setupRecordsPage(app, {
+      onGoBack: () => render('menu')
     });
   } else if (view === 'chat') {
     setupChatbot(app, {

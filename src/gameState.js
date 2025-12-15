@@ -289,7 +289,17 @@ export function getGameState() {
   return {
     collectedElements: [],
     currentCompound: null,
-    compoundQuizCompleted: false
+    compoundQuizCompleted: false,
+    gameStats: {
+      playTime: 0, // 분 단위
+      collectedElementsCount: 0,
+      accuracy: 0, // %
+      elementQuizWrongCount: 0,
+      finalQuizAttempts: 0,
+      finalQuizCorrect: 0,
+      finalQuizWrong: 0,
+      startTime: Date.now()
+    }
   };
 }
 
@@ -307,8 +317,42 @@ export function collectElement(elementNumber) {
   const state = getGameState();
   if (!state.collectedElements.includes(elementNumber)) {
     state.collectedElements.push(elementNumber);
+    state.gameStats.collectedElementsCount = state.collectedElements.length;
     saveGameState(state);
   }
+}
+
+/**
+ * 원소 퀴즈 오답 횟수 증가
+ */
+export function incrementElementQuizWrong() {
+  const state = getGameState();
+  state.gameStats.elementQuizWrongCount++;
+  saveGameState(state);
+}
+
+/**
+ * 최종 시험 통계 업데이트
+ */
+export function updateFinalQuizStats(correct, wrong) {
+  const state = getGameState();
+  state.gameStats.finalQuizAttempts++;
+  state.gameStats.finalQuizCorrect = correct;
+  state.gameStats.finalQuizWrong = wrong;
+  
+  // 정답률 계산
+  const total = correct + wrong;
+  if (total > 0) {
+    state.gameStats.accuracy = Math.round((correct / total) * 100);
+  }
+  
+  // 플레이 시간 계산 (분 단위)
+  if (state.gameStats.startTime) {
+    const playTimeMs = Date.now() - state.gameStats.startTime;
+    state.gameStats.playTime = Math.round(playTimeMs / 60000); // 분으로 변환
+  }
+  
+  saveGameState(state);
 }
 
 /**

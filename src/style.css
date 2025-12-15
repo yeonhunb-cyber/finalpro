@@ -669,6 +669,16 @@ body {
   background: linear-gradient(135deg, rgba(34, 197, 94, 0.25), rgba(15, 23, 42, 0.95));
 }
 
+.menu-button-records {
+  border-color: rgba(168, 85, 247, 0.5);
+  background: linear-gradient(135deg, rgba(168, 85, 247, 0.15), rgba(15, 23, 42, 0.95));
+}
+
+.menu-button-records:hover {
+  border-color: rgba(168, 85, 247, 0.8);
+  background: linear-gradient(135deg, rgba(168, 85, 247, 0.25), rgba(15, 23, 42, 0.95));
+}
+
 .menu-button-icon {
   font-size: 3rem;
   line-height: 1;
@@ -1511,5 +1521,249 @@ body {
 .start-sphinx-back-button:hover {
   background: rgba(250, 204, 21, 0.2);
   transform: translateY(-2px);
+}
+
+/* 스핑크스 감사 메시지 */
+.sphinx-happy-message {
+  text-align: center;
+  margin-bottom: 30px;
+}
+
+.sphinx-happy-icon {
+  font-size: 4rem;
+  margin-bottom: 20px;
+  animation: bounce 1s ease-in-out infinite;
+}
+
+.sphinx-happy-text {
+  color: #f9f4e8;
+  font-size: 1.2rem;
+  line-height: 1.8;
+  margin: 0;
+  font-style: italic;
+}
+
+@keyframes bounce {
+  0%, 100% { transform: translateY(0); }
+  50% { transform: translateY(-10px); }
+}
+
+/* 게임 결과 페이지 */
+.game-result-container {
+  text-align: center;
+}
+
+.game-result-container h2 {
+  color: #facc15;
+  font-size: 2rem;
+  margin: 0 0 30px;
+}
+
+.game-result-stats {
+  display: flex;
+  flex-direction: column;
+  gap: 15px;
+  margin: 0 0 30px;
+  text-align: left;
+  max-width: 500px;
+  margin-left: auto;
+  margin-right: auto;
+}
+
+.game-result-stat {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 15px 20px;
+  background: rgba(250, 204, 21, 0.1);
+  border: 2px solid rgba(250, 204, 21, 0.3);
+  border-radius: 12px;
+}
+
+.stat-label {
+  color: #f9f4e8;
+  font-size: 1.1rem;
+}
+
+.stat-value {
+  color: #facc15;
+  font-size: 1.2rem;
+  font-weight: bold;
+}
+
+.compound-quiz-close-btn {
+  padding: 12px 30px;
+  font-size: 1rem;
+  font-weight: bold;
+  background: rgba(148, 163, 184, 0.3);
+  color: #f9f4e8;
+  border: 2px solid rgba(148, 163, 184, 0.5);
+  border-radius: 12px;
+  cursor: pointer;
+  margin-top: 15px;
+  transition: all 0.2s;
+}
+
+.compound-quiz-close-btn:hover {
+  background: rgba(148, 163, 184, 0.5);
+  border-color: rgba(148, 163, 184, 0.7);
+  transform: translateY(-2px);
+}
+
+/* 기록보기 페이지 */
+.records-main {
+  flex: 1;
+  padding: 24px;
+  overflow-y: auto;
+}
+
+.records-container {
+  max-width: 900px;
+  margin: 0 auto;
+  display: flex;
+  flex-direction: column;
+  gap: 24px;
+}
+
+.records-section {
+  background: rgba(15, 23, 42, 0.6);
+  border: 2px solid rgba(250, 204, 21, 0.3);
+  border-radius: 20px;
+  padding: 24px;
+}
+
+.records-section-title {
+  color: #facc15;
+  font-size: 1.5rem;
+  margin: 0 0 20px;
+  text-align: center;
+  text-shadow: 0 0 10px rgba(250, 204, 21, 0.5);
+}
+
+.records-stats-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+  gap: 16px;
+}
+
+.records-stat-card {
+  display: flex;
+  align-items: center;
+  gap: 16px;
+  padding: 16px;
+  background: rgba(250, 204, 21, 0.1);
+  border: 1px solid rgba(250, 204, 21, 0.3);
+  border-radius: 12px;
+  transition: all 0.2s;
+}
+
+.records-stat-card:hover {
+  background: rgba(250, 204, 21, 0.15);
+  border-color: rgba(250, 204, 21, 0.5);
+  transform: translateY(-2px);
+}
+
+.records-stat-icon {
+  font-size: 2.5rem;
+  line-height: 1;
+}
+
+.records-stat-info {
+  flex: 1;
+}
+
+.records-stat-label {
+  color: rgba(249, 244, 232, 0.8);
+  font-size: 0.9rem;
+  margin-bottom: 4px;
+}
+
+.records-stat-value {
+  color: #facc15;
+  font-size: 1.5rem;
+  font-weight: bold;
+}
+
+.records-compound-card {
+  text-align: center;
+  padding: 24px;
+  background: rgba(250, 204, 21, 0.1);
+  border: 2px solid rgba(250, 204, 21, 0.4);
+  border-radius: 16px;
+}
+
+.records-compound-formula {
+  color: #facc15;
+  font-size: 2.5rem;
+  font-weight: bold;
+  margin-bottom: 12px;
+  text-shadow: 0 0 15px rgba(250, 204, 21, 0.6);
+}
+
+.records-compound-name {
+  color: #f9f4e8;
+  font-size: 1.5rem;
+  font-weight: 600;
+  margin-bottom: 8px;
+}
+
+.records-compound-description {
+  color: rgba(249, 244, 232, 0.8);
+  font-size: 1rem;
+  margin-bottom: 16px;
+  font-style: italic;
+}
+
+.records-compound-progress {
+  color: #facc15;
+  font-size: 1.1rem;
+  font-weight: bold;
+  padding-top: 16px;
+  border-top: 1px solid rgba(250, 204, 21, 0.3);
+}
+
+.records-elements-list {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
+  gap: 12px;
+}
+
+.records-element-item {
+  padding: 12px 16px;
+  background: rgba(250, 204, 21, 0.1);
+  border: 1px solid rgba(250, 204, 21, 0.3);
+  border-radius: 10px;
+  color: #f9f4e8;
+  font-size: 1rem;
+  text-align: center;
+  transition: all 0.2s;
+}
+
+.records-element-item:hover {
+  background: rgba(250, 204, 21, 0.15);
+  border-color: rgba(250, 204, 21, 0.5);
+  transform: translateY(-2px);
+}
+
+.records-no-data {
+  color: rgba(249, 244, 232, 0.6);
+  text-align: center;
+  font-size: 1.1rem;
+  padding: 20px;
+  font-style: italic;
+}
+
+@media (max-width: 768px) {
+  .records-stats-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .records-elements-list {
+    grid-template-columns: 1fr;
+  }
+
+  .records-main {
+    padding: 16px;
+  }
 }
 

@@ -1,19 +1,29 @@
-import { COMPOUND_QUESTS, getGameState, resetGameState } from './gameState.js';
+import { COMPOUND_QUESTS, getGameState, resetGameState, saveGameState } from './gameState.js';
 
 /**
  * 스핑크스 챌린지 페이지 (무서운 스핑크스 등장)
  */
 export function setupSphinxChallengePage(root, { onStartAdventure, onGoBack } = {}) {
-  // 게임 상태 초기화 (새 게임 시작 시)
+  // 매번 새로운 화합물로 도전 시작
   const state = getGameState();
-  if (!state.currentCompound) {
-    // 랜덤 화합물 선택
-    const randomCompound = COMPOUND_QUESTS[Math.floor(Math.random() * COMPOUND_QUESTS.length)];
-    state.currentCompound = randomCompound;
-    state.collectedElements = [];
-    state.compoundQuizCompleted = false;
-    localStorage.setItem('gameState', JSON.stringify(state));
-  }
+  const randomCompound = COMPOUND_QUESTS[Math.floor(Math.random() * COMPOUND_QUESTS.length)];
+  state.currentCompound = randomCompound;
+  state.collectedElements = [];
+  state.compoundQuizCompleted = false;
+
+  // 게임 통계 초기화 및 시작 시간 설정
+  state.gameStats = {
+    playTime: 0,
+    collectedElementsCount: 0,
+    accuracy: 0,
+    elementQuizWrongCount: 0,
+    finalQuizAttempts: 0,
+    finalQuizCorrect: 0,
+    finalQuizWrong: 0,
+    startTime: Date.now()
+  };
+
+  saveGameState(state);
 
   const currentCompound = state.currentCompound;
 

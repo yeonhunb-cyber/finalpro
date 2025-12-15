@@ -1,4 +1,4 @@
-import { ELEMENT_QUIZZES, collectElement, getGameState } from './gameState.js';
+import { ELEMENT_QUIZZES, collectElement, getGameState, incrementElementQuizWrong } from './gameState.js';
 
 /**
  * 원소 퀴즈 모달 표시
@@ -83,6 +83,7 @@ export function showElementQuizModal(elementNumber, onComplete) {
           }, 2000);
         } else {
           // 오답
+          incrementElementQuizWrong();
           btn.classList.add('wrong');
           setTimeout(() => {
             closeModal();

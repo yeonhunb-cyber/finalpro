@@ -4,6 +4,8 @@ import { setupLoginPage } from './loginPage.js';
 import { setupMenuPage } from './menuPage.js';
 import { setupPracticePage } from './practicePage.js';
 import { setupStartPage } from './startPage.js';
+import { setupElementPracticePage } from './elementPracticePage.js';
+import { setupCompoundPracticePage } from './compoundPracticePage.js';
 
 const app = document.querySelector('#app');
 
@@ -30,7 +32,17 @@ function render(view) {
     });
   } else if (view === 'practice') {
     setupPracticePage(app, {
-      onGoBack: () => render('menu')
+      onGoBack: () => render('menu'),
+      onGoToElement: () => render('elementPractice'),
+      onGoToCompound: () => render('compoundPractice')
+    });
+  } else if (view === 'elementPractice') {
+    setupElementPracticePage(app, {
+      onGoBack: () => render('practice')
+    });
+  } else if (view === 'compoundPractice') {
+    setupCompoundPracticePage(app, {
+      onGoBack: () => render('practice')
     });
   } else if (view === 'start') {
     setupStartPage(app, {

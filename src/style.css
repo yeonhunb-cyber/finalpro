@@ -715,3 +715,146 @@ body {
   }
 }
 
+/* 연습용 그리드 & 정보 모달 */
+.practice-main {
+  flex: 1;
+  padding: 20px 24px 24px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.practice-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(90px, 1fr));
+  gap: 14px;
+  width: 100%;
+  max-width: 640px;
+}
+
+.practice-button {
+  position: relative;
+  padding: 14px 10px;
+  border-radius: 16px;
+  border: 1px solid rgba(250, 204, 21, 0.5);
+  background: radial-gradient(circle at top, rgba(250, 204, 21, 0.3), rgba(15, 23, 42, 0.98));
+  color: inherit;
+  cursor: pointer;
+  text-align: center;
+  box-shadow:
+    0 8px 18px rgba(0, 0, 0, 0.6),
+    0 0 0 1px rgba(15, 23, 42, 0.8);
+  transition:
+    transform 0.12s ease,
+    box-shadow 0.12s ease,
+    border-color 0.12s ease;
+}
+
+.practice-button:hover {
+  transform: translateY(-1px);
+  border-color: rgba(250, 250, 210, 0.95);
+  box-shadow:
+    0 10px 22px rgba(0, 0, 0, 0.75),
+    0 0 0 1px rgba(250, 250, 210, 0.9);
+}
+
+.practice-number {
+  position: absolute;
+  top: 6px;
+  left: 8px;
+  font-size: 0.7rem;
+  opacity: 0.85;
+}
+
+.practice-symbol {
+  display: block;
+  font-size: 1.6rem;
+  font-weight: 700;
+  letter-spacing: 0.03em;
+}
+
+.practice-name {
+  display: block;
+  margin-top: 4px;
+  font-size: 0.85rem;
+  opacity: 0.86;
+}
+
+.practice-button-compound {
+  padding: 16px 12px;
+  border-color: rgba(56, 189, 248, 0.6);
+  background: radial-gradient(circle at top, rgba(56, 189, 248, 0.28), rgba(15, 23, 42, 0.98));
+  font-size: 0.95rem;
+}
+
+.practice-button-compound .practice-symbol {
+  font-size: 1.2rem;
+  word-break: break-all;
+}
+
+.practice-button-compound .practice-name {
+  font-size: 0.8rem;
+}
+
+.info-modal {
+  position: fixed;
+  inset: 0;
+  background: radial-gradient(circle at top, rgba(15, 23, 42, 0.85), rgba(15, 23, 42, 0.98));
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 30;
+}
+
+.info-modal[hidden] {
+  display: none !important;
+}
+
+.info-modal-content {
+  position: relative;
+  max-width: 420px;
+  width: calc(100% - 40px);
+  padding: 20px 20px 18px;
+  border-radius: 20px;
+  background: radial-gradient(circle at top, rgba(250, 204, 21, 0.2), rgba(15, 23, 42, 0.98));
+  border: 1px solid rgba(250, 204, 21, 0.7);
+  box-shadow:
+    0 24px 50px rgba(0, 0, 0, 0.9),
+    0 0 0 1px rgba(15, 23, 42, 0.9);
+}
+
+.info-modal h2 {
+  margin: 0 0 6px;
+  font-size: 1.3rem;
+}
+
+.info-modal p {
+  margin: 2px 0;
+  font-size: 0.95rem;
+}
+
+.info-modal-subtitle {
+  opacity: 0.9;
+}
+
+.info-modal-close {
+  position: absolute;
+  top: 8px;
+  right: 10px;
+  border: none;
+  background: transparent;
+  color: #facc15;
+  font-size: 1.5rem;
+  cursor: pointer;
+}
+
+@media (max-width: 768px) {
+  .practice-main {
+    padding: 16px;
+  }
+
+  .practice-grid {
+    max-width: 480px;
+  }
+}
+

@@ -1,3 +1,5 @@
+import { auth } from './firebaseConfig.js';
+
 /**
  * 메인 메뉴 페이지를 설정하는 함수
  * @param {HTMLElement} root
@@ -102,8 +104,24 @@ export function setupMenuPage(root, { onGoToTutor, onGoToPractice, onGoToStart, 
   }
 
   if (logoutBtn && typeof onLogout === 'function') {
-    logoutBtn.addEventListener('click', () => {
-      onLogout();
+    logoutBtn.addEventListener('click', async () => {
+      try {
+        // Firebase 로그아웃 (auth가 있을 때만)
+        if (auth) {
+          await auth.signOut();
+        }
+        // localStorage 정리
+        localStorage.removeItem('userInfo');
+        localStorage.removeItem('firebaseUser');
+        // 로그아웃 콜백 실행
+        onLogout();
+      } catch (error) {
+        console.error('로그아웃 오류:', error);
+        // 오류가 발생해도 로그아웃 진행
+        localStorage.removeItem('userInfo');
+        localStorage.removeItem('firebaseUser');
+        onLogout();
+      }
     });
   }
 }

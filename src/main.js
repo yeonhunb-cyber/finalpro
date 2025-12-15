@@ -10,11 +10,20 @@ import { setupSphinxChallengePage, showAngrySphinx } from './sphinxChallengePage
 import { setupCompoundQuizPage } from './compoundQuizPage.js';
 import { setupRecordsPage } from './recordsPage.js';
 import { getGameState, hasAllElements } from './gameState.js';
+import { auth, firebaseEnvValid } from './firebaseConfig.js';
 
 const app = document.querySelector('#app');
 
+if (!app) {
+  console.error('❌ #app 요소를 찾을 수 없습니다. index.html을 확인해주세요.');
+  document.body.innerHTML = '<div style="padding: 20px; color: red;">앱을 초기화할 수 없습니다. #app 요소가 없습니다.</div>';
+}
+
 function render(view) {
-  if (!app) return;
+  if (!app) {
+    console.error('❌ #app 요소가 없어 렌더링할 수 없습니다.');
+    return;
+  }
 
   if (view === 'login') {
     setupLoginPage(app, {
@@ -90,9 +99,69 @@ function render(view) {
   }
 }
 
-// 처음에는 로그인 페이지를 보여준다.
-// 로그인 상태 확인 (선택사항: localStorage에 userInfo가 있으면 메뉴로)
-const userInfo = localStorage.getItem('userInfo');
-render(userInfo ? 'menu' : 'login');
+// Firebase 인증 상태 확인 후 초기 화면 렌더링
+// Firebase 환경변수가 올바르지 않거나 auth가 없으면, 그냥 기존 로그인 페이지를 바로 렌더링합니다.
+try {
+  if (!firebaseEnvValid || !auth) {
+    console.warn('⚠️ Firebase Auth 없이 앱을 실행합니다. (환경변수 미설정 또는 초기화 실패)');
+    // Firebase 없이도 로그인 페이지 표시
+    setTimeout(() => {
+      render('login');
+    }, 100);
+  } else {
+    try {
+      auth.onAuthStateChanged((user) => {
+        try {
+          if (user) {
+            // Firebase 로그인된 경우
+            const userInfo = localStorage.getItem('userInfo');
+            render(userInfo ? 'menu' : 'login');
+          } else {
+            // Firebase 로그인되지 않은 경우
+            render('login');
+          }
+        } catch (error) {
+          console.error('❌ 렌더링 중 오류 발생:', error);
+          // 에러 발생 시에도 로그인 페이지 표시 시도
+          try {
+            render('login');
+          } catch (renderError) {
+            console.error('❌ 로그인 페이지 렌더링도 실패:', renderError);
+            if (app) {
+              app.innerHTML = `
+                <div style="padding: 40px; text-align: center; color: #facc15; background: rgba(15, 23, 42, 0.95); border-radius: 20px; margin: 20px;">
+                  <h2>오류가 발생했습니다</h2>
+                  <p>${error.message}</p>
+                  <p style="margin-top: 20px; font-size: 0.9rem; opacity: 0.8;">브라우저 콘솔을 확인해주세요.</p>
+                </div>
+              `;
+            }
+          }
+        }
+      });
+    } catch (error) {
+      console.error('❌ Firebase 인증 상태 확인 실패:', error);
+      // 에러 발생 시에도 로그인 페이지 표시 시도
+      setTimeout(() => {
+        render('login');
+      }, 100);
+    }
+  }
+} catch (error) {
+  console.error('❌ 앱 초기화 중 치명적 오류:', error);
+  // 최후의 수단: 기본 HTML 표시
+  if (app) {
+    app.innerHTML = `
+      <div style="padding: 40px; text-align: center; color: #facc15; background: rgba(15, 23, 42, 0.95); border-radius: 20px; margin: 20px;">
+        <h2>앱 초기화 오류</h2>
+        <p>${error.message}</p>
+        <p style="margin-top: 20px; font-size: 0.9rem; opacity: 0.8;">
+          브라우저 콘솔을 확인해주세요.<br/>
+          개발 서버가 정상적으로 실행 중인지 확인해주세요.
+        </p>
+      </div>
+    `;
+  }
+}
 
 

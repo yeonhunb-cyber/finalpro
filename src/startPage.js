@@ -1,5 +1,8 @@
 import * as THREE from 'three';
 
+import { showElementQuizModal } from './elementQuizModal.js';
+import { getGameState } from './gameState.js';
+
 const ELEMENT_SYMBOLS = [
   { number: 1, symbol: 'H' },
   { number: 2, symbol: 'He' },
@@ -215,18 +218,24 @@ function initPyramidScene(canvas) {
   const count = ELEMENT_SYMBOLS.length;
   const radiusCircle = 54; // 간격 3배 (18 * 3)
 
-  // 원소 버튼을 3D 공간에 배치하기 위한 그룹
-  const buttonGroup = new THREE.Group();
-  scene.add(buttonGroup);
+      // 원소 버튼을 3D 공간에 배치하기 위한 그룹
+      const buttonGroup = new THREE.Group();
+      scene.add(buttonGroup);
 
-  ELEMENT_SYMBOLS.forEach((el, index) => {
+      // 피라미드 위치 저장 (퀴즈 체크용)
+      const pyramidPositions = [];
+
+      ELEMENT_SYMBOLS.forEach((el, index) => {
     const angle = (index / count) * Math.PI * 2;
     const x = radiusCircle * Math.cos(angle);
     const z = radiusCircle * Math.sin(angle);
 
-    const pyramid = new THREE.Mesh(smallGeo, smallPyramidMat);
-    pyramid.position.set(x, 4.5, z);
-    scene.add(pyramid);
+        const pyramid = new THREE.Mesh(smallGeo, smallPyramidMat);
+        pyramid.position.set(x, 4.5, z);
+        scene.add(pyramid);
+        
+        // 피라미드 위치 저장
+        pyramidPositions.push({ number: el.number, x, z });
 
     // 가디언 - 창을 든 사람 형태
     const guardian = createGuardianWithSpear(guardianMat);
@@ -325,6 +334,22 @@ function initPyramidScene(canvas) {
       sprite.lookAt(camera.position);
     });
 
+    // 플레이어가 피라미드 앞에 있는지 체크 (퀴즈 트리거)
+    pyramidPositions.forEach((pyramid) => {
+      const distance = Math.sqrt(
+        Math.pow(player.position.x - pyramid.x, 2) +
+        Math.pow(player.position.z - pyramid.z, 2)
+      );
+      if (distance < 8 && !window.quizTriggered) {
+        window.quizTriggered = true;
+        showElementQuizModal(pyramid.number, () => {
+          // 퀴즈 종료 후 플래그 해제 및 플레이어를 가운데 피라미드 앞(0, 0, 20)으로 이동
+          window.quizTriggered = false;
+          player.position.set(0, 0, 20);
+        });
+      }
+    });
+
     renderer.render(scene, camera);
   };
   animate();
@@ -375,9 +400,9 @@ function initPyramidScene(canvas) {
 /**
  * 시작 페이지를 설정하는 함수
  * @param {HTMLElement} root
- * @param {{ onGoBack?: () => void }} options
+ * @param {{ onGoBack?: () => void, onGoToSphinx?: () => void }} options
  */
-export function setupStartPage(root, { onGoBack } = {}) {
+export function setupStartPage(root, { onGoBack, onGoToSphinx } = {}) {
   root.innerHTML = `
     <div class="chat-page">
       <div class="chat-sky"></div>
@@ -415,6 +440,7 @@ export function setupStartPage(root, { onGoBack } = {}) {
                 </div>
               </div>
             </div>
+            <button id="start-sphinx-back" class="start-sphinx-back-button">스핑크스에게 돌아가기</button>
           </div>
         </main>
       </div>
@@ -425,6 +451,13 @@ export function setupStartPage(root, { onGoBack } = {}) {
   if (backBtn && typeof onGoBack === 'function') {
     backBtn.addEventListener('click', () => {
       onGoBack();
+    });
+  }
+
+  const sphinxBackBtn = root.querySelector('#start-sphinx-back');
+  if (sphinxBackBtn && typeof onGoToSphinx === 'function') {
+    sphinxBackBtn.addEventListener('click', () => {
+      onGoToSphinx();
     });
   }
 

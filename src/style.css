@@ -1014,3 +1014,502 @@ body {
   }
 }
 
+/* 스핑크스 챌린지 페이지 */
+.sphinx-challenge-page {
+  position: fixed;
+  inset: 0;
+  overflow: hidden;
+  background: #0a0712;
+}
+
+.sphinx-challenge-sky {
+  position: absolute;
+  inset: 0;
+  background: radial-gradient(circle at 20% 20%, rgba(139, 0, 0, 0.3), transparent 60%),
+    radial-gradient(circle at 80% 10%, rgba(255, 0, 0, 0.2), transparent 55%),
+    radial-gradient(circle at 50% -20%, rgba(0, 0, 0, 0.8), transparent 60%);
+}
+
+.sphinx-challenge-desert {
+  position: absolute;
+  left: -10%;
+  right: -10%;
+  bottom: -2px;
+  height: 40vh;
+  background: linear-gradient(180deg, rgba(80, 40, 20, 0.8) 0%, #3d1f0f 100%);
+  border-radius: 50% 50% 0 0;
+}
+
+.sphinx-challenge-container {
+  position: relative;
+  z-index: 10;
+  width: 100%;
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  padding: 40px;
+}
+
+.sphinx-challenge-sphinx {
+  width: 300px;
+  height: 300px;
+  position: relative;
+  margin-bottom: 40px;
+  background: radial-gradient(circle, #facc15 0%, #92400e 100%);
+  border-radius: 50%;
+  box-shadow: 0 0 60px rgba(250, 204, 21, 0.8), inset 0 0 40px rgba(0, 0, 0, 0.5);
+}
+
+.sphinx-challenge-eyes {
+  position: absolute;
+  top: 30%;
+  left: 50%;
+  transform: translateX(-50%);
+  display: flex;
+  gap: 60px;
+}
+
+.sphinx-eye {
+  width: 40px;
+  height: 60px;
+  background: #000;
+  border-radius: 50%;
+  position: relative;
+  animation: blink 3s infinite;
+}
+
+.sphinx-eye::before {
+  content: '';
+  position: absolute;
+  top: 10px;
+  left: 10px;
+  width: 20px;
+  height: 20px;
+  background: #facc15;
+  border-radius: 50%;
+}
+
+.sphinx-challenge-mouth {
+  position: absolute;
+  bottom: 25%;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 120px;
+  height: 60px;
+  border: 4px solid #000;
+  border-top: none;
+  border-radius: 0 0 120px 120px;
+}
+
+.sphinx-challenge-dialog {
+  background: rgba(15, 23, 42, 0.95);
+  border: 2px solid #facc15;
+  border-radius: 20px;
+  padding: 30px;
+  max-width: 600px;
+  text-align: center;
+  box-shadow: 0 20px 60px rgba(0, 0, 0, 0.8);
+}
+
+.sphinx-challenge-title {
+  color: #facc15;
+  font-size: 2rem;
+  margin: 0 0 20px;
+  text-shadow: 0 0 20px rgba(250, 204, 21, 0.8);
+}
+
+.sphinx-challenge-text {
+  color: #f9f4e8;
+  font-size: 1.1rem;
+  line-height: 1.8;
+  margin: 0 0 30px;
+}
+
+.sphinx-adventure-button {
+  padding: 15px 40px;
+  font-size: 1.2rem;
+  font-weight: bold;
+  background: linear-gradient(135deg, #facc15, #f97316);
+  color: #1f2937;
+  border: none;
+  border-radius: 12px;
+  cursor: pointer;
+  box-shadow: 0 8px 20px rgba(250, 204, 21, 0.6);
+  transition: transform 0.2s, box-shadow 0.2s;
+}
+
+.sphinx-adventure-button:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 12px 28px rgba(250, 204, 21, 0.8);
+}
+
+.sphinx-challenge-back-button {
+  position: absolute;
+  top: 20px;
+  right: 20px;
+  padding: 10px 20px;
+  background: rgba(15, 23, 42, 0.9);
+  border: 2px solid #facc15;
+  color: #facc15;
+  border-radius: 8px;
+  cursor: pointer;
+  font-weight: bold;
+}
+
+/* 화면 흔들림 효과 */
+.shake {
+  animation: shake 0.5s;
+}
+
+.shake-intense {
+  animation: shakeIntense 0.3s infinite;
+}
+
+@keyframes shake {
+  0%, 100% { transform: translate(0, 0); }
+  10% { transform: translate(-10px, -5px) rotate(-1deg); }
+  20% { transform: translate(10px, 5px) rotate(1deg); }
+  30% { transform: translate(-10px, -5px) rotate(-1deg); }
+  40% { transform: translate(10px, 5px) rotate(1deg); }
+  50% { transform: translate(-5px, -2px) rotate(-0.5deg); }
+  60% { transform: translate(5px, 2px) rotate(0.5deg); }
+  70% { transform: translate(-5px, -2px) rotate(-0.5deg); }
+  80% { transform: translate(5px, 2px) rotate(0.5deg); }
+  90% { transform: translate(-2px, -1px) rotate(-0.25deg); }
+}
+
+@keyframes shakeIntense {
+  0%, 100% { transform: translate(0, 0); }
+  25% { transform: translate(-15px, -10px) rotate(-2deg); }
+  50% { transform: translate(15px, 10px) rotate(2deg); }
+  75% { transform: translate(-15px, -10px) rotate(-2deg); }
+}
+
+@keyframes blink {
+  0%, 90%, 100% { height: 60px; }
+  95% { height: 5px; }
+}
+
+/* 화난 스핑크스 */
+.angry-sphinx .sphinx-challenge-sphinx {
+  background: radial-gradient(circle, #ef4444 0%, #7f1d1d 100%);
+  box-shadow: 0 0 80px rgba(239, 68, 68, 0.9), inset 0 0 40px rgba(0, 0, 0, 0.7);
+}
+
+.angry-eyes .sphinx-eye {
+  background: #ff0000;
+  animation: angryBlink 0.5s infinite;
+}
+
+.angry-mouth {
+  border-color: #ff0000;
+  border-width: 6px;
+}
+
+.angry-title {
+  color: #ef4444;
+  text-shadow: 0 0 20px rgba(239, 68, 68, 0.8);
+}
+
+.angry-text {
+  color: #ffcccc;
+}
+
+@keyframes angryBlink {
+  0%, 100% { opacity: 1; }
+  50% { opacity: 0.3; }
+}
+
+/* 원소 퀴즈 모달 */
+.element-quiz-modal {
+  position: fixed;
+  inset: 0;
+  background: rgba(0, 0, 0, 0.8);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 1000;
+}
+
+.element-quiz-content {
+  background: linear-gradient(135deg, rgba(15, 23, 42, 0.98), rgba(30, 41, 59, 0.95));
+  border: 2px solid #facc15;
+  border-radius: 20px;
+  padding: 30px;
+  max-width: 500px;
+  width: 90%;
+  position: relative;
+  box-shadow: 0 20px 60px rgba(0, 0, 0, 0.9);
+}
+
+.element-quiz-close {
+  position: absolute;
+  top: 10px;
+  right: 15px;
+  background: transparent;
+  border: none;
+  color: #facc15;
+  font-size: 2rem;
+  cursor: pointer;
+  line-height: 1;
+}
+
+.element-quiz-content h2 {
+  color: #facc15;
+  margin: 0 0 20px;
+  text-align: center;
+}
+
+.element-quiz-question {
+  color: #f9f4e8;
+  font-size: 1.2rem;
+  margin: 0 0 20px;
+  text-align: center;
+}
+
+.element-quiz-options {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  margin: 0 0 15px;
+}
+
+.element-quiz-option {
+  padding: 15px;
+  background: rgba(250, 204, 21, 0.1);
+  border: 2px solid rgba(250, 204, 21, 0.5);
+  border-radius: 12px;
+  color: #f9f4e8;
+  font-size: 1rem;
+  cursor: pointer;
+  transition: all 0.2s;
+}
+
+.element-quiz-option:hover:not(:disabled) {
+  background: rgba(250, 204, 21, 0.2);
+  border-color: #facc15;
+  transform: translateX(5px);
+}
+
+.element-quiz-option.correct {
+  background: rgba(34, 197, 94, 0.3);
+  border-color: #22c55e;
+}
+
+.element-quiz-option.wrong {
+  background: rgba(239, 68, 68, 0.3);
+  border-color: #ef4444;
+}
+
+.element-quiz-option:disabled {
+  cursor: not-allowed;
+  opacity: 0.7;
+}
+
+.element-quiz-hint {
+  color: rgba(250, 204, 21, 0.8);
+  font-size: 0.9rem;
+  text-align: center;
+  margin: 0;
+  font-style: italic;
+}
+
+.element-quiz-already {
+  color: #22c55e;
+  text-align: center;
+  font-size: 1.1rem;
+  margin: 0;
+}
+
+/* 원소 획득 이펙트 */
+.element-collected-effect {
+  position: fixed;
+  inset: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 2000;
+  pointer-events: none;
+  opacity: 0;
+  transition: opacity 0.5s;
+}
+
+.element-collected-effect.show {
+  opacity: 1;
+}
+
+.element-collected-content {
+  background: linear-gradient(135deg, rgba(250, 204, 21, 0.95), rgba(251, 191, 36, 0.95));
+  border: 3px solid #facc15;
+  border-radius: 20px;
+  padding: 40px;
+  text-align: center;
+  box-shadow: 0 20px 60px rgba(250, 204, 21, 0.8);
+  animation: scaleIn 0.3s ease-out;
+}
+
+.element-collected-icon {
+  font-size: 4rem;
+  margin-bottom: 20px;
+  animation: rotate 1s ease-in-out infinite;
+}
+
+.element-collected-content h3 {
+  color: #1f2937;
+  font-size: 2rem;
+  margin: 0 0 10px;
+}
+
+.element-collected-content p {
+  color: #1f2937;
+  font-size: 1.2rem;
+  margin: 0;
+}
+
+@keyframes scaleIn {
+  from {
+    transform: scale(0);
+  }
+  to {
+    transform: scale(1);
+  }
+}
+
+@keyframes rotate {
+  0%, 100% { transform: rotate(0deg); }
+  50% { transform: rotate(180deg); }
+}
+
+/* 화합물 퀴즈 페이지 */
+.compound-quiz-main {
+  flex: 1;
+  padding: 24px;
+  overflow-y: auto;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.compound-quiz-container {
+  width: 100%;
+  max-width: 700px;
+}
+
+.compound-quiz-progress {
+  text-align: center;
+  color: #facc15;
+  font-size: 1.1rem;
+  margin-bottom: 30px;
+  font-weight: bold;
+}
+
+.compound-quiz-question h2 {
+  color: #f9f4e8;
+  font-size: 1.5rem;
+  margin: 0 0 30px;
+  text-align: center;
+}
+
+.compound-quiz-options {
+  display: flex;
+  flex-direction: column;
+  gap: 15px;
+}
+
+.compound-quiz-option {
+  padding: 18px;
+  background: rgba(250, 204, 21, 0.1);
+  border: 2px solid rgba(250, 204, 21, 0.5);
+  border-radius: 12px;
+  color: #f9f4e8;
+  font-size: 1.1rem;
+  cursor: pointer;
+  transition: all 0.2s;
+  text-align: left;
+}
+
+.compound-quiz-option:hover:not(:disabled) {
+  background: rgba(250, 204, 21, 0.2);
+  border-color: #facc15;
+  transform: translateX(5px);
+}
+
+.compound-quiz-option.correct {
+  background: rgba(34, 197, 94, 0.3);
+  border-color: #22c55e;
+}
+
+.compound-quiz-option.wrong {
+  background: rgba(239, 68, 68, 0.3);
+  border-color: #ef4444;
+}
+
+.compound-quiz-option:disabled {
+  cursor: not-allowed;
+  opacity: 0.7;
+}
+
+.compound-quiz-result {
+  text-align: center;
+}
+
+.compound-quiz-result h2 {
+  color: #facc15;
+  font-size: 2rem;
+  margin: 0 0 20px;
+}
+
+.compound-quiz-score {
+  color: #f9f4e8;
+  font-size: 1.5rem;
+  margin: 0 0 15px;
+  font-weight: bold;
+}
+
+.compound-quiz-message {
+  color: #f9f4e8;
+  font-size: 1.2rem;
+  margin: 0 0 30px;
+}
+
+.compound-quiz-complete-btn {
+  padding: 15px 40px;
+  font-size: 1.2rem;
+  font-weight: bold;
+  background: linear-gradient(135deg, #facc15, #f97316);
+  color: #1f2937;
+  border: none;
+  border-radius: 12px;
+  cursor: pointer;
+  box-shadow: 0 8px 20px rgba(250, 204, 21, 0.6);
+  transition: transform 0.2s, box-shadow 0.2s;
+}
+
+.compound-quiz-complete-btn:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 12px 28px rgba(250, 204, 21, 0.8);
+}
+
+/* 스핑크스에게 돌아가기 버튼 */
+.start-sphinx-back-button {
+  position: absolute;
+  top: 20px;
+  left: 20px;
+  padding: 10px 20px;
+  background: rgba(15, 23, 42, 0.9);
+  border: 2px solid #facc15;
+  color: #facc15;
+  border-radius: 8px;
+  cursor: pointer;
+  font-weight: bold;
+  z-index: 100;
+  transition: all 0.2s;
+}
+
+.start-sphinx-back-button:hover {
+  background: rgba(250, 204, 21, 0.2);
+  transform: translateY(-2px);
+}
+

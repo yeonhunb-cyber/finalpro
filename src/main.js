@@ -6,6 +6,9 @@ import { setupPracticePage } from './practicePage.js';
 import { setupStartPage } from './startPage.js';
 import { setupElementPracticePage } from './elementPracticePage.js';
 import { setupCompoundPracticePage } from './compoundPracticePage.js';
+import { setupSphinxChallengePage, showAngrySphinx } from './sphinxChallengePage.js';
+import { setupCompoundQuizPage } from './compoundQuizPage.js';
+import { getGameState, hasAllElements } from './gameState.js';
 
 const app = document.querySelector('#app');
 
@@ -20,7 +23,7 @@ function render(view) {
     setupMenuPage(app, {
       onGoToTutor: () => render('chat'),
       onGoToPractice: () => render('practice'),
-      onGoToStart: () => render('start'),
+      onGoToStart: () => render('sphinxChallenge'), // 시작 버튼을 누르면 스핑크스 챌린지로
       onLogout: () => {
         localStorage.removeItem('userInfo');
         render('login');
@@ -46,7 +49,37 @@ function render(view) {
     });
   } else if (view === 'start') {
     setupStartPage(app, {
+      onGoBack: () => render('menu'),
+      onGoToSphinx: () => {
+        const state = getGameState();
+        if (!state.currentCompound) {
+          render('sphinxChallenge');
+        } else {
+          // 원소 수집 확인
+          if (hasAllElements(state.currentCompound)) {
+            // 모든 원소 수집 완료 - 화합물 퀴즈로
+            render('compoundQuiz');
+          } else {
+            // 원소 부족 - 화난 스핑크스 표시
+            showAngrySphinx(app, {
+              onClose: () => render('start')
+            });
+          }
+        }
+      }
+    });
+  } else if (view === 'sphinxChallenge') {
+    setupSphinxChallengePage(app, {
+      onStartAdventure: () => render('start'),
       onGoBack: () => render('menu')
+    });
+  } else if (view === 'compoundQuiz') {
+    setupCompoundQuizPage(app, {
+      onComplete: () => {
+        // 퀴즈 완료 후 메뉴로
+        render('menu');
+      },
+      onGoBack: () => render('start')
     });
   }
 }

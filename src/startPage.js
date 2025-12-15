@@ -236,29 +236,30 @@ function initPyramidScene(canvas) {
     guardian.lookAt(x, 2, z);
     scene.add(guardian);
 
-    // 원소 버튼을 피라미드 앞에 배치 (3D 텍스트 스프라이트)
-    const buttonCanvas = document.createElement('canvas');
-    buttonCanvas.width = 128;
-    buttonCanvas.height = 64;
-    const ctx = buttonCanvas.getContext('2d');
-    ctx.fillStyle = 'rgba(15, 23, 42, 0.9)';
-    ctx.fillRect(0, 0, 128, 64);
-    ctx.strokeStyle = '#facc15';
-    ctx.lineWidth = 2;
-    ctx.strokeRect(2, 2, 124, 60);
-    ctx.fillStyle = '#facc15';
-    ctx.font = 'bold 12px Arial';
-    ctx.textAlign = 'center';
-    ctx.fillText(`${el.number}`, 64, 20);
-    ctx.font = 'bold 20px Arial';
-    ctx.fillText(el.symbol, 64, 45);
+        // 원소 버튼을 피라미드 머리 위에 배치 (3D 텍스트 스프라이트)
+        const buttonCanvas = document.createElement('canvas');
+        buttonCanvas.width = 128;
+        buttonCanvas.height = 64;
+        const ctx = buttonCanvas.getContext('2d');
+        ctx.fillStyle = 'rgba(15, 23, 42, 0.9)';
+        ctx.fillRect(0, 0, 128, 64);
+        ctx.strokeStyle = '#facc15';
+        ctx.lineWidth = 2;
+        ctx.strokeRect(2, 2, 124, 60);
+        ctx.fillStyle = '#facc15';
+        ctx.font = 'bold 12px Arial';
+        ctx.textAlign = 'center';
+        ctx.fillText(`${el.number}`, 64, 20);
+        ctx.font = 'bold 20px Arial';
+        ctx.fillText(el.symbol, 64, 45);
 
-    const texture = new THREE.CanvasTexture(buttonCanvas);
-    const spriteMat = new THREE.SpriteMaterial({ map: texture });
-    const sprite = new THREE.Sprite(spriteMat);
-    sprite.scale.set(4, 2, 1);
-    sprite.position.set(x - dir.x * 3, 2.5, z - dir.z * 3);
-    buttonGroup.add(sprite);
+        const texture = new THREE.CanvasTexture(buttonCanvas);
+        const spriteMat = new THREE.SpriteMaterial({ map: texture });
+        const sprite = new THREE.Sprite(spriteMat);
+        sprite.scale.set(4, 2, 1);
+        // 피라미드 높이(9) + 피라미드 위치(4.5) = 13.5, 그 위에 약간 여유를 두어 14로 설정
+        sprite.position.set(x, 14, z);
+        buttonGroup.add(sprite);
   });
 
   // 플레이어 캐릭터 생성 및 배치

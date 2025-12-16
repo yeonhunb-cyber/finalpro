@@ -38,7 +38,8 @@ export async function askSphinx(question, history = []) {
     },
     body: JSON.stringify({
       model: MODEL,
-      messages
+      messages,
+      temperature: 0.7 // 창의성과 일관성의 균형 (0.0 ~ 2.0, 기본값 1.0)
     })
   });
 

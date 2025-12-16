@@ -103,8 +103,30 @@ export function setupChatbot(root, { onGoBack } = {}) {
   const sendBtn = root.querySelector('#chat-send');
   const backBtn = root.querySelector('#chat-back-button');
 
+  // LocalStorage에서 대화 기록 복원
+  const CHAT_HISTORY_KEY = 'sphinx_chat_history';
+  const loadHistory = () => {
+    try {
+      const savedHistory = localStorage.getItem(CHAT_HISTORY_KEY);
+      if (savedHistory) {
+        return JSON.parse(savedHistory);
+      }
+    } catch (error) {
+      console.error('대화 기록 로드 실패:', error);
+    }
+    return [];
+  };
+
+  const saveHistory = (history) => {
+    try {
+      localStorage.setItem(CHAT_HISTORY_KEY, JSON.stringify(history));
+    } catch (error) {
+      console.error('대화 기록 저장 실패:', error);
+    }
+  };
+
   /** @type {Array<{role: 'user' | 'assistant', content: string}>} */
-  let history = [];
+  let history = loadHistory();
   let isSending = false;
   let isSubmitting = false;
 
@@ -144,6 +166,7 @@ export function setupChatbot(root, { onGoBack } = {}) {
     // 사용자 메시지 표시 및 기록
     addMessage('user', question);
     history.push({ role: 'user', content: question });
+    saveHistory(history); // LocalStorage에 저장
     inputEl.value = '';
 
     setLoading(true);
@@ -151,6 +174,7 @@ export function setupChatbot(root, { onGoBack } = {}) {
     try {
       const { answer, newMessage } = await askSphinx(question, history);
       history.push(newMessage);
+      saveHistory(history); // LocalStorage에 저장
       addMessage('assistant', answer);
     } catch (error) {
       console.error(error);
@@ -202,12 +226,19 @@ export function setupChatbot(root, { onGoBack } = {}) {
     });
   }
 
-  // 초기 안내 메시지
-  addMessage(
-    'assistant',
-    '나는 이집트의 스핑크스다. 원한다면 원자, 분자, 화학 반응, 주기율표, 산과 염기 등 화학에 대해 무엇이든 물어보아라. ' +
-      '너의 수준에 맞게 쉽게, 차근차근 설명해 주겠다.'
-  );
+  // 저장된 대화 기록이 있으면 복원, 없으면 초기 안내 메시지 표시
+  if (history.length > 0) {
+    // 저장된 대화 기록을 화면에 표시
+    history.forEach((msg) => {
+      addMessage(msg.role, msg.content);
+    });
+  } else {
+    // 초기 안내 메시지
+    const initialMessage = '나는 이집트의 스핑크스다. 원한다면 원자, 분자, 화학 반응, 주기율표, 산과 염기 등 화학에 대해 무엇이든 물어보아라. ' +
+      '너의 수준에 맞게 쉽게, 차근차근 설명해 주겠다.';
+    addMessage('assistant', initialMessage);
+    // 초기 메시지를 history에 추가하지 않음 (사용자 질문부터 시작)
+  }
 }
 
 
